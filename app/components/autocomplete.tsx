@@ -1140,7 +1140,7 @@ const Autocomplete = () => {
 
   // Close dropdown when clicking outside.
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent<Document>) => {
+    const handleClickOutside = (event: MouseEvent) => {
       if (
         containerRef.current &&
         !containerRef.current.contains(event.target as Node)
@@ -1148,8 +1148,15 @@ const Autocomplete = () => {
         setDropdownOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside as unknown as EventListener,
+    );
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside as unknown as EventListener,
+      );
   }, []);
 
   return (
